@@ -1,8 +1,12 @@
 package KzPack4Go
 
-
 import "encoding/json"
 import "log"
+import "io"
+import "crypto/md5"
+import "crypto/rand"
+import "encoding/base64"
+import "encoding/hex"
 
 type TEROR struct {
 	ERORCODE string
@@ -40,6 +44,20 @@ func ToTRUE(aListData interface{}) TEROR {
 	result.ERORMEMO = "TRUE"
 	result.LISTDATA = aListData
 	return result
+}
+
+func GetMd5String(s string) string {
+	h := md5.New()
+	h.Write([]byte(s)) //使用zhifeiya名字做散列值，设定后不要变
+	return hex.EncodeToString(h.Sum(nil))
+}
+
+func ToGUID() string {
+	b := make([]byte, 48)
+	if _, err := io.ReadFull(rand.Reader, b); err != nil {
+		return ""
+	}
+	return GetMd5String(base64.URLEncoding.EncodeToString(b))
 }
 
 func ChEror(err error, msg string) {
