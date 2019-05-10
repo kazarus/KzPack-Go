@@ -1,13 +1,15 @@
 package KzPack4Go
 
-import "encoding/json"
+import "fmt"
 import "log"
 import "io"
+import "strings"
 import "crypto/md5"
 import "crypto/rand"
-import "encoding/base64"
 import "encoding/hex"
-import "strings"
+import "encoding/json"
+import "encoding/base64"
+import "github.com/satori/go.uuid"
 
 type TEROR struct {
 	ERORCODE string
@@ -59,6 +61,15 @@ func ToGUID() string {
 		return ""
 	}
 	return strings.ToUpper(GetMd5String(base64.URLEncoding.EncodeToString(b)))
+}
+
+func ToUUID() string {
+	uuid, eror := uuid.NewV4()
+	if eror != nil {
+		fmt.Printf("KzPackGo.ToUUID GET WRONG.%s", eror)
+		return ""
+	}
+	return fmt.Sprintf("{%s}", uuid)
 }
 
 func ChEror(err error, msg string) {
