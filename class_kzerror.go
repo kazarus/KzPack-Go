@@ -12,6 +12,7 @@ import "encoding/base64"
 import "github.com/satori/go.uuid"
 
 type TEROR struct {
+	ONSTATUS bool
 	ERORCODE string
 	ERORMEMO string
 	LISTDATA interface{}
@@ -20,7 +21,10 @@ type TEROR struct {
 var eror error
 
 func (self TEROR) MarshalJSON() ([]byte, error) {
+
 	var result = make(map[string]interface{})
+
+	result["ONSTATUS"] = self.ONSTATUS
 	result["ERORCODE"] = KzUnicode(self.ERORCODE)
 	result["ERORMEMO"] = KzUnicode(self.ERORMEMO)
 	result["LISTDATA"] = self.LISTDATA
@@ -29,6 +33,7 @@ func (self TEROR) MarshalJSON() ([]byte, error) {
 }
 func ToEROR(aERORMEMO string) TEROR {
 	var result TEROR
+	result.ONSTATUS = false
 	result.ERORCODE = "EROR"
 	result.ERORMEMO = aERORMEMO
 	return result
@@ -36,6 +41,7 @@ func ToEROR(aERORMEMO string) TEROR {
 
 func ToMEMO(aERORMEMO string) TEROR {
 	var result TEROR
+	result.ONSTATUS = false
 	result.ERORCODE = "EROR"
 	result.ERORMEMO = aERORMEMO
 	return result
@@ -43,6 +49,7 @@ func ToMEMO(aERORMEMO string) TEROR {
 
 func ToTRUE(aListData interface{}) TEROR {
 	var result TEROR
+	result.ONSTATUS = true;
 	result.ERORCODE = "TRUE"
 	result.ERORMEMO = "TRUE"
 	result.LISTDATA = aListData
