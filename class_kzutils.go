@@ -1,8 +1,9 @@
 package KzPack4Go
 
-
-import "strconv"
+import "os"
 import "time"
+import "strconv"
+
 
 type KzUnicode string
 
@@ -41,5 +42,12 @@ func Contain(a string, list []string) bool {
 		}
 	}
 	return false
+}
+
+func FileExist(aFilePath string) (bool,error){
+	_, eror := os.Stat(aFilePath)
+	if eror == nil { return true, nil }
+	if os.IsNotExist(eror) { return false, nil }
+	return true, eror
 }
 
