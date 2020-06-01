@@ -25,6 +25,20 @@ func ToKJQJ() int64 {
 	return result
 }
 
+func Min(x, y int64) int64 {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+func Max(x, y int64) int64 {
+	if x > y {
+		return x
+	}
+	return y
+}
+
 func StrToInt(Value string) int64 {
 	result, _ := strconv.ParseInt(Value, 10, 64)
 	return result
