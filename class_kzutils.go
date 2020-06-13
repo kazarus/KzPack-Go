@@ -1,9 +1,10 @@
 package KzPack4Go
 
-import "os"
-import "time"
-import "strconv"
-
+import (
+	"os"
+	"strconv"
+	"time"
+)
 
 type KzUnicode string
 
@@ -15,8 +16,19 @@ func ToDate() int64 {
 	result, _ := strconv.ParseInt(time.Now().Format("20060102"), 10, 64)
 	return result
 }
+
+func DatePlus(aStartDay int) int64 {
+	result, _ := strconv.ParseInt(time.Now().AddDate(0, 0, aStartDay).Format("20060102"), 10, 64)
+	return result
+}
+
 func ToTime() float64 {
 	result, _ := strconv.ParseFloat(time.Now().Format("20060102150405"), 64)
+	return result
+}
+
+func TimePlus(aStartDay int) float64 {
+	result, _ := strconv.ParseFloat(time.Now().AddDate(0, 0, aStartDay).Format("20060102150405"), 64)
 	return result
 }
 
@@ -58,10 +70,13 @@ func Contain(a string, list []string) bool {
 	return false
 }
 
-func FileExist(aFilePath string) (bool,error){
+func FileExist(aFilePath string) (bool, error) {
 	_, eror := os.Stat(aFilePath)
-	if eror == nil { return true, nil }
-	if os.IsNotExist(eror) { return false, nil }
+	if eror == nil {
+		return true, nil
+	}
+	if os.IsNotExist(eror) {
+		return false, nil
+	}
 	return true, eror
 }
-
