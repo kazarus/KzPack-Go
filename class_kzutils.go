@@ -1,6 +1,7 @@
 package KzPack4Go
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"time"
@@ -25,6 +26,53 @@ func DatePlus(aStartDay int) int64 {
 func ToTime() float64 {
 	result, _ := strconv.ParseFloat(time.Now().Format("20060102150405"), 64)
 	return result
+}
+
+func SubStr(str string, start int, end int) string {
+	rs := []rune(str)
+	length := len(rs)
+
+	if start < 0 || start > length {
+		return ""
+	}
+
+	if end < 0 || end > length {
+		return ""
+	}
+	return string(rs[start:end])
+}
+
+func TimeToStr(Value float64) string {
+	//#20200618105004 -> 2020-06-18 10:50:04
+	result := fmt.Sprintf("%.0f", Value)
+
+	if len(result) != 14 {
+		return "-1"
+	}
+
+	a := result[0:4]
+	b := result[4:6]
+	c := result[6:8]
+	d := result[8:10]
+	e := result[10:12]
+	f := result[12:14]
+
+	return fmt.Sprintf("%s-%s-%s %s:%s:%s", a, b, c, d, e, f)
+}
+
+func DateToStr(Value int64) string {
+	//#20200618 -> 2020-06-18
+	result := fmt.Sprintf("%d", Value)
+
+	if len(result) != 8 {
+		return "-1"
+	}
+
+	a := result[0:4]
+	b := result[4:6]
+	c := result[6:8]
+
+	return fmt.Sprintf("%s-%s-%s", a, b, c)
 }
 
 func TimePlus(aStartDay int) float64 {
@@ -58,6 +106,11 @@ func StrToInt(Value string) int64 {
 
 func IntToStr(Value int64) string {
 	result := strconv.Itoa(int(Value))
+	return result
+}
+
+func FormatFloat(Value float64) float64 {
+	result, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", Value), 64)
 	return result
 }
 
