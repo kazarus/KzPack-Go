@@ -114,6 +114,36 @@ func FormatFloat(Value float64) float64 {
 	return result
 }
 
+func IfThenI(Value bool, Result0, Result1 int64) int64 {
+
+	Result := Result1
+	if Value {
+		Result = Result0
+	}
+
+	return Result
+}
+
+func IfThenS(Value bool, Result0, Result1 string) string {
+
+	Result := Result1
+	if Value {
+		Result = Result0
+	}
+
+	return Result
+}
+
+func IfThenF(Value bool, Result0, Result1 float64) float64 {
+
+	Result := Result1
+	if Value {
+		Result = Result0
+	}
+
+	return Result
+}
+
 func Contain(a string, list []string) bool {
 	for _, b := range list {
 		if b == a {
