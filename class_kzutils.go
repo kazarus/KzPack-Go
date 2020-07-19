@@ -1,7 +1,9 @@
 package KzPack4Go
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"strconv"
 	"time"
@@ -14,21 +16,28 @@ func (s KzUnicode) MarshalJSON() ([]byte, error) {
 }
 
 func ToDate() int64 {
+
 	result, _ := strconv.ParseInt(time.Now().Format("20060102"), 10, 64)
 	return result
+
 }
 
 func DatePlus(aStartDay int) int64 {
+
 	result, _ := strconv.ParseInt(time.Now().AddDate(0, 0, aStartDay).Format("20060102"), 10, 64)
 	return result
+
 }
 
 func ToTime() float64 {
+
 	result, _ := strconv.ParseFloat(time.Now().Format("20060102150405"), 64)
 	return result
+
 }
 
 func SubStr(str string, start int, end int) string {
+
 	rs := []rune(str)
 	length := len(rs)
 
@@ -40,6 +49,7 @@ func SubStr(str string, start int, end int) string {
 		return ""
 	}
 	return string(rs[start:end])
+
 }
 
 func TimeToStr(Value float64) string {
@@ -58,6 +68,7 @@ func TimeToStr(Value float64) string {
 	f := result[12:14]
 
 	return fmt.Sprintf("%s-%s-%s %s:%s:%s", a, b, c, d, e, f)
+
 }
 
 func DateToStr(Value int64) string {
@@ -73,45 +84,60 @@ func DateToStr(Value int64) string {
 	c := result[6:8]
 
 	return fmt.Sprintf("%s-%s-%s", a, b, c)
+
 }
 
 func TimePlus(aStartDay int) float64 {
+
 	result, _ := strconv.ParseFloat(time.Now().AddDate(0, 0, aStartDay).Format("20060102150405"), 64)
 	return result
+
 }
 
 func ToKJQJ() int64 {
+
 	result, _ := strconv.ParseInt(time.Now().Format("200601"), 10, 64)
 	return result
+
 }
 
 func Min(x, y int64) int64 {
+
 	if x < y {
 		return x
 	}
+
 	return y
 }
 
 func Max(x, y int64) int64 {
+
 	if x > y {
 		return x
 	}
+
 	return y
 }
 
 func StrToInt(Value string) int64 {
+
 	result, _ := strconv.ParseInt(Value, 10, 64)
 	return result
+
 }
 
 func IntToStr(Value int64) string {
+
 	result := strconv.Itoa(int(Value))
 	return result
+
 }
 
 func FormatFloat(Value float64) float64 {
+
 	result, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", Value), 64)
 	return result
+
 }
 
 func IfThenI(Value bool, Result0, Result1 int64) int64 {
@@ -145,21 +171,96 @@ func IfThenF(Value bool, Result0, Result1 float64) float64 {
 }
 
 func Contain(a string, list []string) bool {
+
 	for _, b := range list {
 		if b == a {
 			return true
 		}
 	}
+
 	return false
 }
 
 func FileExist(aFilePath string) (bool, error) {
+
 	_, eror := os.Stat(aFilePath)
-	if eror == nil {
-		return true, nil
+	if eror != nil {
+		return false, eror
 	}
 	if os.IsNotExist(eror) {
 		return false, nil
 	}
-	return true, eror
+
+	return true, nil
+
+}
+
+func IsFile(aFilePath string) bool {
+
+	fi, e := os.Stat(aFilePath)
+	if e != nil {
+		return false
+	}
+
+	return !fi.IsDir()
+
+}
+
+func ToFile(aFilePath string, v interface{}) error {
+
+	var eror error
+	var source []byte
+
+	/*
+		if !IsFile(aFilePath) {
+			return errors.New("Error: The FilePath is not a FileName;")
+		}
+	*/
+
+	source, eror = json.Marshal(v)
+	if eror != nil {
+		return eror
+	}
+
+	eror = ioutil.WriteFile(aFilePath, source, 0666)
+	if eror != nil {
+		return eror
+	}
+
+	return nil
+
+}
+
+func InFile(aFilePath string, v interface{}) error {
+
+	var eror error
+	var didExist bool
+
+	/*
+		if !IsFile(aFilePath) {
+			return errors.New("Error: The FilePath is not a FileName;")
+		}
+	*/
+
+	didExist, _ = FileExist(aFilePath)
+	if !didExist {
+		eror = ToFile(aFilePath, v)
+		if eror != nil {
+			return eror
+		}
+		return nil
+	}
+
+	source, eror := ioutil.ReadFile(aFilePath)
+	if eror != nil {
+		return eror
+	}
+
+	eror = json.Unmarshal(source, &v)
+	if eror != nil {
+		return eror
+	}
+
+	return nil
+
 }
