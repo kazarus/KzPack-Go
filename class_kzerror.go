@@ -1,15 +1,18 @@
 package KzPack4Go
 
-import "fmt"
-import "log"
-import "io"
-import "strings"
-import "crypto/md5"
-import "crypto/rand"
-import "encoding/hex"
-import "encoding/json"
-import "encoding/base64"
-import "github.com/satori/go.uuid"
+import (
+	"crypto/md5"
+	"crypto/rand"
+	"encoding/base64"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"strings"
+
+	"github.com/satori/go.uuid"
+)
 
 type TEROR struct {
 	ONSTATUS bool
@@ -49,7 +52,7 @@ func ToMEMO(aERORMEMO string) TEROR {
 
 func ToTRUE(aListData interface{}) TEROR {
 	var result TEROR
-	result.ONSTATUS = true;
+	result.ONSTATUS = true
 	result.ERORCODE = "TRUE"
 	result.ERORMEMO = "TRUE"
 	result.LISTDATA = aListData
@@ -58,7 +61,7 @@ func ToTRUE(aListData interface{}) TEROR {
 
 func GetMd5String(s string) string {
 	h := md5.New()
-	h.Write([]byte(s)) //使用zhifeiya名字做散列值，设定后不要变
+	h.Write([]byte(s))
 	return hex.EncodeToString(h.Sum(nil))
 }
 
