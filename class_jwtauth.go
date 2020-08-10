@@ -8,6 +8,7 @@ type TKzCustomClaims struct {
 	EntityID string  `json:"entityID"`
 	WhoBuild int64   `json:"whoBuild"`
 	UserRoot int64   `json:"userRoot"`
+	UserIndx int64   `json:"userIndx"`
 	CreateAt float64 `json:"createAt"`
 	jwt.StandardClaims
 }
@@ -17,6 +18,7 @@ type TTokenUsr struct {
 	EntityID string  `json:"entityID"`
 	WhoBuild int64   `json:"whoBuild"`
 	UserRoot int64   `json:"userRoot"`
+	UserIndx int64   `json:"userIndx"`
 	CreateAt float64 `json:"createAt"`
 }
 
@@ -61,11 +63,12 @@ func ParseToken2(tokenString string) (TTokenUsr, error) {
 		if KzClaims, ok := MyClaims.Claims.(*TKzCustomClaims); ok && MyClaims.Valid {
 			fmt.Println(KzClaims)
 
-			TokenUsr.EntityID=KzClaims.EntityID
-			TokenUsr.CreateAt=KzClaims.CreateAt
-			TokenUsr.UserName=KzClaims.UserName
-			TokenUsr.WhoBuild=KzClaims.WhoBuild
-			TokenUsr.UserRoot=KzClaims.UserRoot
+			TokenUsr.EntityID = KzClaims.EntityID
+			TokenUsr.CreateAt = KzClaims.CreateAt
+			TokenUsr.UserName = KzClaims.UserName
+			TokenUsr.WhoBuild = KzClaims.WhoBuild
+			TokenUsr.UserRoot = KzClaims.UserRoot
+			TokenUsr.UserIndx = KzClaims.UserIndx
 
 			return TokenUsr, nil
 		}
