@@ -34,6 +34,7 @@ func (self TEROR) MarshalJSON() ([]byte, error) {
 
 	return json.Marshal(result)
 }
+
 func ToEROR(aERORMEMO string) TEROR {
 	var result TEROR
 	result.ONSTATUS = false
@@ -47,6 +48,15 @@ func ToMEMO(aERORMEMO string) TEROR {
 	result.ONSTATUS = false
 	result.ERORCODE = "EROR"
 	result.ERORMEMO = aERORMEMO
+	return result
+}
+
+func  ToDATA(aOnStatus bool,aErorCode string,aErorMemo string,aListData interface{})  TEROR {
+	var result TEROR
+	result.ONSTATUS = aOnStatus
+	result.ERORCODE = aErorCode
+	result.ERORMEMO = aErorMemo
+	result.LISTDATA = aListData
 	return result
 }
 
