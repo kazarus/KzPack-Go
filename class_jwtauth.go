@@ -22,9 +22,9 @@ type TTokenUsr struct {
 	CreateAt float64 `json:"createAt"`
 }
 
-func ParseToken1(tokenString string) (*TKzCustomClaims, error) {
+func ParseToken1(tokenString string,tokenSecret string) (*TKzCustomClaims, error) {
 
-	KzSecret := []byte("tech.cxcloud.secret")
+	KzSecret := []byte(tokenSecret)
 
 	var KzClaims = TKzCustomClaims{}
 	MyClaims, eror := jwt.ParseWithClaims(tokenString, &KzClaims, func(token *jwt.Token) (interface{}, error) {
@@ -45,9 +45,9 @@ func ParseToken1(tokenString string) (*TKzCustomClaims, error) {
 	return nil, nil
 }
 
-func ParseToken2(tokenString string) (TTokenUsr, error) {
+func ParseToken2(tokenString string,tokenSecret string) (TTokenUsr, error) {
 
-	KzSecret := []byte("tech.cxcloud.secret")
+	KzSecret := []byte(tokenSecret)
 
 	var KzClaims = TKzCustomClaims{}
 	var TokenUsr = TTokenUsr{}
