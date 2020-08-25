@@ -18,6 +18,7 @@ type TEROR struct {
 	ONSTATUS bool
 	ERORCODE string
 	ERORMEMO string
+	DATASIZE int
 	LISTDATA interface{}
 }
 
@@ -30,42 +31,75 @@ func (self TEROR) MarshalJSON() ([]byte, error) {
 	result["ONSTATUS"] = self.ONSTATUS
 	result["ERORCODE"] = KzUnicode(self.ERORCODE)
 	result["ERORMEMO"] = KzUnicode(self.ERORMEMO)
+	result["DATASIZE"] = self.DATASIZE
+	if self.LISTDATA == nil {
+		self.LISTDATA = make([]interface{}, 0)
+	}
 	result["LISTDATA"] = self.LISTDATA
 
 	return json.Marshal(result)
 }
 
 func ToEROR(aERORMEMO string) TEROR {
+
 	var result TEROR
+
+	result.DATASIZE = 0
 	result.ONSTATUS = false
 	result.ERORCODE = "EROR"
 	result.ERORMEMO = aERORMEMO
+
 	return result
 }
 
 func ToMEMO(aERORMEMO string) TEROR {
+
 	var result TEROR
+
+	result.DATASIZE = 0
 	result.ONSTATUS = false
 	result.ERORCODE = "EROR"
 	result.ERORMEMO = aERORMEMO
+
 	return result
 }
 
-func  ToDATA(aOnStatus bool,aErorCode string,aErorMemo string,aListData interface{})  TEROR {
+func ToDATA(aOnStatus bool, aErorCode string, aErorMemo string, aDataSize int, aListData interface{}) TEROR {
+
 	var result TEROR
+
 	result.ONSTATUS = aOnStatus
 	result.ERORCODE = aErorCode
 	result.ERORMEMO = aErorMemo
+	result.DATASIZE = aDataSize
 	result.LISTDATA = aListData
+
 	return result
 }
 
 func ToTRUE(aListData interface{}) TEROR {
+
 	var result TEROR
+
 	result.ONSTATUS = true
 	result.ERORCODE = "TRUE"
 	result.ERORMEMO = "TRUE"
 	result.LISTDATA = aListData
+	result.DATASIZE = 0
+
+	return result
+}
+
+func ToSIZE(aListData interface{}, aDataSize int) TEROR {
+
+	var result TEROR
+
+	result.ONSTATUS = true
+	result.ERORCODE = "TRUE"
+	result.ERORMEMO = "TRUE"
+	result.LISTDATA = aListData
+	result.DATASIZE = aDataSize
+
 	return result
 }
 
