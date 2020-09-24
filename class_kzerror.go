@@ -109,6 +109,7 @@ func GetMd5String(s string) string {
 	return hex.EncodeToString(h.Sum(nil))
 }
 
+
 func ToGUID() string {
 	b := make([]byte, 48)
 	if _, err := io.ReadFull(rand.Reader, b); err != nil {
@@ -116,6 +117,7 @@ func ToGUID() string {
 	}
 	return strings.ToUpper(GetMd5String(base64.URLEncoding.EncodeToString(b)))
 }
+
 
 func ToUUID() string {
 	uuid, eror := uuid.NewV4()
