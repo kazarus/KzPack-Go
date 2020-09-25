@@ -150,6 +150,16 @@ func IfThenI(Value bool, Result0, Result1 int64) int64 {
 	return Result
 }
 
+func IfFailI(Value bool, Result0 int64) int64 {
+
+	var Result int64 = 0
+	if Value {
+		Result = Result0
+	}
+
+	return Result
+}
+
 func IfThenS(Value bool, Result0, Result1 string) string {
 
 	Result := Result1
@@ -160,9 +170,29 @@ func IfThenS(Value bool, Result0, Result1 string) string {
 	return Result
 }
 
+func IfFailS(Value bool, Result0 string) string {
+
+	Result := ""
+	if Value {
+		Result = Result0
+	}
+
+	return Result
+}
+
 func IfThenF(Value bool, Result0, Result1 float64) float64 {
 
 	Result := Result1
+	if Value {
+		Result = Result0
+	}
+
+	return Result
+}
+
+func IfFailF(Value bool, Result0 float64) float64 {
+
+	var Result float64 = 0
 	if Value {
 		Result = Result0
 	}
