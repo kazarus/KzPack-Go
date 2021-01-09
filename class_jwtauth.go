@@ -22,6 +22,13 @@ type TTokenUsr struct {
 	CreateAt float64 `json:"createAt"`
 }
 
+type TErrorUsr struct {
+	UserCode string
+	ErrorCnt int64
+}
+
+type TBlackList map[string]TErrorUsr
+
 func ParseToken1(tokenString string,tokenSecret string) (*TKzCustomClaims, error) {
 
 	KzSecret := []byte(tokenSecret)
